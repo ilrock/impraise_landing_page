@@ -46,7 +46,7 @@ export const getDetails = (handle) => {
 
 export const getRepos = (handle) => {
   const query = '{' +
-    `search(first: 100, type: REPOSITORY, query: "user:${handle}") {` +
+    `search(first: 10, type: REPOSITORY, query: "user:${handle}") {` +
       'edges{' +
         'cursor ' +
         'node {' +
@@ -83,7 +83,7 @@ export const getRepos = (handle) => {
 
 export const searchRepos = (search, handle) => {
   const query = '{' +
-    `search(first: 100, type: REPOSITORY, query: "${search} user:${handle}"){` +
+    `search(first: 10, type: REPOSITORY, query: "${search} user:${handle}"){` +
       'edges{' +
         'cursor ' +
         'node {' +
