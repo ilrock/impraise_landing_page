@@ -135,7 +135,7 @@ export async function setContext(app, context) {
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {"personalToken":"3bf61e6d5510b815410b83f1f68eac2dff45c573"}
+      env: {"personalToken":"a71ab7cbd3daf433c2caaf113ffeb12cf285a5a6"}
     }
     // Only set once
     if (context.req) app.context.req = context.req
