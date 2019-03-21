@@ -6,7 +6,7 @@
         <v-btn color="success" @click="onSearch">Search</v-btn>
       </v-flex>
     </v-layout>
-    <v-layout row wrap>
+    <v-layout v-if="selected" row wrap d-flex mt-5>
       <landing-page :account="selected"/>
     </v-layout>
   </v-container>
@@ -14,8 +14,12 @@
 
 <script>
 import getDetails from '../graphql'
+import LandingPage from '../components/LandingPage'
 
 export default {
+  components: {
+    LandingPage
+  },
   data () {
     return {
       search: '',

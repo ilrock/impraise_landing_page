@@ -11,3 +11,8 @@ export default {
 
 }
 </script>
+<style>
+  .v-icon {
+    font-size: 16px !important;
+  }
+</style>

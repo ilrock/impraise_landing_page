@@ -6,6 +6,8 @@ const getDeails = (handle) => {
           '... on User {' +
             'login ' +
             'name ' +
+            'location ' +
+            'websiteUrl ' +
             'avatarUrl ' +
             'pinnedRepositories (first:10) {' +
               'edges {' +
