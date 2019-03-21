@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import getDetails from '../graphql'
+import { getDetails } from '../graphql'
 import Loader from '../components/Loader'
 import ErrorMessage from '../components/ErrorMessage'
 import TextInput from '../components/TextInput'
@@ -26,19 +26,23 @@ export default {
       search: '',
       loading: false,
       error: null,
-      selected: null
+    }
+  },
+  computed: {
+    selected () {
+      return this.$store.getters['accounts/account']
     }
   },
   methods: {
     async onSearch () {
       try {
-        this.selected = false
         this.error = null
         this.loading = true
+
         const { data: res } = await this.$axios.post('https://api.github.com/graphql', getDetails(this.search))
 
         if (res.data.search.edges.length > 0) {
-          this.selected = res.data.search.edges[0].node
+          this.$store.dispatch('accounts/setAccount', res.data.search.edges[0].node)
         } else {
           throw new Error('There has been an error while fetching the account details. Make sure that the account is an organization')
         }
