@@ -39,16 +39,11 @@ export default {
         this.error = null
         this.loading = true
 
-        const { data: res } = await this.$axios.post('https://api.github.com/graphql', getDetails(this.search))
-
-        if (res.data.search.edges.length > 0) {
-          this.$store.dispatch('accounts/setAccount', res.data.search.edges[0].node)
-        } else {
-          throw new Error('There has been an error while fetching the account details. Make sure that the account is an organization')
-        }
+        await this.$store.dispatch('accounts/getAccount', this.search)
         
         this.loading = false
       } catch (error) {
+        this.$store.dispatch('accounts/resetAccount')
         this.error = error.message
       } finally {
         this.loading = false

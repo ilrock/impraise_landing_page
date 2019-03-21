@@ -15,6 +15,7 @@ npm-debug.log*
 build/Release
 
 .env
+.nuxt
 
 # Dependency directory
 node_modules
