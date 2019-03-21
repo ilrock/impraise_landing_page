@@ -36,7 +36,7 @@ const getDeails = (handle) => {
                 '}' +
               '}' +
             '}' +
-            'repositories (first:10) {' +
+            'repositories (first:100) {' +
               'edges {' +
                 'node {' +
                   'name ' +

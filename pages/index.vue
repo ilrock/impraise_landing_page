@@ -16,6 +16,11 @@
     <v-layout v-if="selected" row wrap d-flex mt-5>
       <landing-page :account="selected"/>
     </v-layout>
+    <v-layout v-if="error" row wrap>
+      <v-alert :value="true" type="error">
+        {{ error }}
+      </v-alert>
+    </v-layout>
   </v-container>
 </template>
 
@@ -31,6 +36,7 @@ export default {
     return {
       search: '',
       loading: false,
+      error: null,
       selected: null
     }
   },
@@ -38,8 +44,15 @@ export default {
     async onSearch () {
       const handle = this.search
       this.loading = true
+      this.error = null
       const { data: res } = await this.$axios.post('https://api.github.com/graphql', getDetails(handle))
-      this.selected = res.data.search.edges[0].node
+
+      if (res.data.search.edges.length > 0) {
+        this.selected = res.data.search.edges[0].node
+      } else {
+        this.error = 'There has been an error while fetching the account details. Make sure that the account is an organization'
+      }
+      
       this.loading = false
     }
   }
