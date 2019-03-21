@@ -2,9 +2,16 @@
   <v-container grid-list-xs>
     <v-layout row wrap>
       <v-flex xs12 md6 offset-md3>
-        <v-text-field v-model="search" label="Search for a GitHub account" />
-        <v-btn color="success" @click="onSearch">Search</v-btn>
+        <v-input>
+          <v-text-field v-model="search" label="Search for a GitHub organization" />
+          <template slot="append">
+            <v-btn color="primary" @click="onSearch">Search</v-btn>
+          </template>
+        </v-input> 
       </v-flex>
+    </v-layout>
+    <v-layout v-if="loading" row wrap text-xs-center class="loading-container">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </v-layout>
     <v-layout v-if="selected" row wrap d-flex mt-5>
       <landing-page :account="selected"/>
@@ -23,20 +30,24 @@ export default {
   data () {
     return {
       search: '',
+      loading: false,
       selected: null
     }
   },
   methods: {
-    onLogin () {
-      this.$auth.loginWith('github')
-        .then((res) => {})
-    },
     async onSearch () {
       const handle = this.search
+      this.loading = true
       const { data: res } = await this.$axios.post('https://api.github.com/graphql', getDetails(handle))
-      console.log(res.data.search.edges[0].node)
       this.selected = res.data.search.edges[0].node
+      this.loading = false
     }
   }
 }
 </script>
+<style>
+  .loading-container {
+    display: flex;
+    justify-content: center;
+  }
+</style>
