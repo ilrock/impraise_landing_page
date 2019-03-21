@@ -1,36 +1,25 @@
 <template>
   <v-container grid-list-xs>
-    <v-layout row wrap>
-      <v-flex xs12 md6 offset-md3>
-        <v-input>
-          <v-text-field v-model="search" label="Search for a GitHub organization" />
-          <template slot="append">
-            <v-btn color="primary" @click="onSearch">Search</v-btn>
-          </template>
-        </v-input> 
-      </v-flex>
-    </v-layout>
-    <v-layout v-if="loading" row wrap text-xs-center class="loading-container">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </v-layout>
-    <v-layout v-if="selected" row wrap d-flex mt-5>
-      <landing-page :account="selected"/>
-    </v-layout>
-    <v-layout v-if="error" row wrap>
-      <v-alert :value="true" type="error">
-        {{ error }}
-      </v-alert>
-    </v-layout>
+    <text-input />
+    <loader v-if="loading" />
+    <landing-page v-if="selected" :account="selected"/>
+    <error-message v-if="error" :message="error" />
   </v-container>
 </template>
 
 <script>
 import getDetails from '../graphql'
+import Loader from '../components/Loader'
+import ErrorMessage from '../components/ErrorMessage'
+import TextInput from '../components/TextInput'
 import LandingPage from '../components/LandingPage'
 
 export default {
   components: {
-    LandingPage
+    LandingPage,
+    TextInput,
+    Loader,
+    ErrorMessage
   },
   data () {
     return {
@@ -42,25 +31,25 @@ export default {
   },
   methods: {
     async onSearch () {
-      const handle = this.search
-      this.loading = true
-      this.error = null
-      const { data: res } = await this.$axios.post('https://api.github.com/graphql', getDetails(handle))
+      try {
+        this.selected = false
+        this.error = null
+        this.loading = true
+        const { data: res } = await this.$axios.post('https://api.github.com/graphql', getDetails(this.search))
 
-      if (res.data.search.edges.length > 0) {
-        this.selected = res.data.search.edges[0].node
-      } else {
-        this.error = 'There has been an error while fetching the account details. Make sure that the account is an organization'
+        if (res.data.search.edges.length > 0) {
+          this.selected = res.data.search.edges[0].node
+        } else {
+          throw new Error('There has been an error while fetching the account details. Make sure that the account is an organization')
+        }
+        
+        this.loading = false
+      } catch (error) {
+        this.error = error.message
+      } finally {
+        this.loading = false
       }
-      
-      this.loading = false
     }
   }
 }
 </script>
-<style>
-  .loading-container {
-    display: flex;
-    justify-content: center;
-  }
-</style>
