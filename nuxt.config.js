@@ -45,7 +45,6 @@ module.exports = {
   plugins: [
     '@/plugins/startup',
     '@/plugins/vuetify',
-    { src: '@/plugins/vueEditor', ssr: false }
   ],
 
   /*
@@ -53,9 +52,8 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    'cookie-universal-nuxt',
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
   ],
   /*
   ** Axios module configuration
