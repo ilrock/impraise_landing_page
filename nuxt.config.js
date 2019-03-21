@@ -64,19 +64,10 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
   ],
   /*
   ** Axios module configuration
   */
-  auth: {
-    strategies: {
-      github: {
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_SECRET
-      }
-    }
-  },
   /*
   ** Build configuration
   */

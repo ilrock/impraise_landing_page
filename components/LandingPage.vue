@@ -1,20 +1,7 @@
 <template>
   <v-card>
     <v-container grid-list-xs>
-      <v-layout column wrap>
-        <v-list-tile class="grow">
-          <v-list-tile-avatar color="grey darken-3">
-            <v-img class="elevation-6" :src="account.avatarUrl" />
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title>
-              {{ account.login }} | 
-              <v-icon>location_on</v-icon> {{ account.location }} | 
-              <v-icon>link</v-icon> {{ account.websiteUrl }}
-            </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-layout>
+      <Header :account="account"/>
       <v-layout v-if="account.pinnedRepositories.edges.length > 0" row wrap>
         <v-flex xs12 mt-3>
           <span class="title"> Pinned Repositories </span>
@@ -37,13 +24,15 @@
 </template>
 
 <script>
-import RepoCard from '../components/RepoCard'
+import Header from './Header'
+import RepoCard from './RepoCard'
 
 export default {
   props: {
     account: Object
   },
   components: {
+    Header,
     RepoCard
   }
 }

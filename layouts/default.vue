@@ -15,4 +15,8 @@ export default {
   .v-icon {
     font-size: 16px !important;
   }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 </style>
