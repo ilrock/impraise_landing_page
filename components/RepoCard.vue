@@ -1,6 +1,6 @@
 <template>
-  <v-card hover class="ma-4">
-    <v-card-title primary-title>
+  <v-card hover class="ma-4" :href="repo.node.url" target="_blank">
+    <v-card-title class="title" primary-title>
       {{ repo.node.name }}
     </v-card-title>
     <v-divider></v-divider>
@@ -8,7 +8,7 @@
       {{ repo.node.description }}
     </v-card-text>
     <v-card-actions >
-      <span style="display: flex; align-items: center">
+      <span v-if="repo.node.languages.edges.length > 0" style="display: flex; align-items: center">
         <span class="dot mr-2" :style="{ backgroundColor: repo.node.languages.edges[0].node.color }"></span>
         {{ repo.node.languages.edges[0].node.name }}
       </span>

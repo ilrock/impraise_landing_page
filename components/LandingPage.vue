@@ -15,7 +15,7 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-layout>
-      <v-layout row wrap>
+      <v-layout v-if="account.pinnedRepositories.edges.length > 0" row wrap>
         <v-flex xs12 mt-3>
           <span class="title"> Pinned Repositories </span>
         </v-flex>
@@ -28,7 +28,7 @@
           <span class="title"> Repositories </span>
         </v-flex>
 
-        <v-flex xs12 mt-3 v-for="repo in account.repositories.edges" :key="repo.node.name">
+        <v-flex xs12 md6 mt-3 v-for="repo in account.repositories.edges" :key="repo.node.name">
           <repo-card :repo="repo"/>
         </v-flex>
       </v-layout>

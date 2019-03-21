@@ -34,7 +34,7 @@ export default {
     async onSearch () {
       const handle = this.search
       const { data: res } = await this.$axios.post('https://api.github.com/graphql', getDetails(handle))
-      
+      console.log(res.data.search.edges[0].node)
       this.selected = res.data.search.edges[0].node
     }
   }

@@ -14,6 +14,11 @@ const getDeails = (handle) => {
                 'node {' +
                   'name ' +
                   'description ' +
+                  'url ' +
+                  'licenseInfo {' +
+                    'name' +
+                  '}' +
+                  'updatedAt ' +
                   'stargazers {' +
                     'totalCount' +
                   '}' +
@@ -36,6 +41,11 @@ const getDeails = (handle) => {
                 'node {' +
                   'name ' +
                   'description ' +
+                  'url ' +
+                  'licenseInfo {' +
+                    'name' +
+                  '}' +
+                  'updatedAt ' +
                   'stargazers {' +
                     'totalCount' +
                   '}' +
