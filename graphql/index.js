@@ -1,9 +1,9 @@
 const getDeails = (handle) => {
   const query = '{' +
-    `search(first: 1, type: USER, query: "${handle} in:login") {` +
+    `search(first: 1, type: USER, query: "${handle} in:login type:org") {` +
       'edges {' +
         'node {' +
-          '... on User {' +
+          '... on Organization {' +
             'login ' +
             'name ' +
             'location ' +
