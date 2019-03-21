@@ -36,33 +36,6 @@ export const getDetails = (handle) => {
                 '}' +
               '}' +
             '}' +
-            // 'repositories (first:100) {' +
-            //   'edges {' +
-            //     'node {' +
-            //       'name ' +
-            //       'description ' +
-            //       'url ' +
-            //       'licenseInfo {' +
-            //         'name' +
-            //       '}' +
-            //       'updatedAt ' +
-            //       'stargazers {' +
-            //         'totalCount' +
-            //       '}' +
-            //       'forks {' +
-            //         'totalCount' +
-            //       '}' +
-            //       'languages (first:5) {' +
-            //         'edges {' +
-            //           'node {' +
-            //             'name ' +
-            //             'color ' +
-            //           '}' +
-            //         '}' +
-            //       '}' +
-            //     '}' +
-            //   '}' +
-            // '}' +
           '}' +
         '}' +
       '}' +
@@ -110,28 +83,29 @@ export const getRepos = (handle) => {
 
 export const searchRepos = (search, handle) => {
   const query = '{' +
-    `search(first: 1, type: REPOSITORY, query: "${search} user:${handle}"){` +
+    `search(first: 100, type: REPOSITORY, query: "${search} user:${handle}"){` +
       'edges{' +
-        'cursor' +
+        'cursor ' +
         'node {' +
           '... on Repository {' +
-            'name' +
-            'description' +
+            'name ' +
+            'description ' +
             'stargazers {' +
-              'totalCount' +
+              'totalCount ' +
             '}' +
             'forks {' +
-              'totalCount' +
+              'totalCount ' +
             '}' +
-            'url' +
+            'url ' +
+            'updatedAt ' +
             'licenseInfo {' +
-              'name' +
+              'name ' +
             '}' +
             'languages (first:5) {' +
               'edges {' +
                 'node {' +
-                  'name' +
-                  'color' +
+                  'name ' +
+                  'color ' +
                 '}' +
               '}' +
             '}' +
@@ -141,5 +115,5 @@ export const searchRepos = (search, handle) => {
     '}' +
   '}'
 
-  return query
+  return { query }
 }

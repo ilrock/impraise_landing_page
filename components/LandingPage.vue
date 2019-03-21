@@ -4,12 +4,12 @@
       <v-container grid-list-xs>
         <Header :account="account"/>
         <repo-list 
-          v-if="account.pinnedRepositories.edges.length > 0" 
+          v-if="account.pinnedRepositories.edges.length > 0"
           title="Pinned repositories"
           :repos="account.pinnedRepositories.edges" />
         <repo-list 
-          v-if="repos.length > 0" 
           title="Repositories"
+          :searchEnabled="true"
           :repos="repos" />
       </v-container>
     </v-card>
