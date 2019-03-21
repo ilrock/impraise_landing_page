@@ -3,23 +3,14 @@
     <v-card>
       <v-container grid-list-xs>
         <Header :account="account"/>
-        <v-layout v-if="account.pinnedRepositories.edges.length > 0" row wrap>
-          <v-flex xs12 mt-3>
-            <span class="title"> Pinned Repositories </span>
-          </v-flex>
-          <v-flex xs12 md6 mt-3 v-for="repo in account.pinnedRepositories.edges" :key="repo.node.name">
-            <repo-card :repo="repo"/>
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap>
-          <v-flex xs12 mt-3>
-            <span class="title"> Repositories </span>
-          </v-flex>
-
-          <v-flex xs12 md6 mt-3 v-for="repo in account.repositories.edges" :key="repo.node.name">
-            <repo-card :repo="repo"/>
-          </v-flex>
-        </v-layout>
+        <repo-list 
+          v-if="account.pinnedRepositories.edges.length > 0" 
+          title="Pinned repositories"
+          :repos="account.pinnedRepositories.edges" />
+        <repo-list 
+          v-if="account.repositories.edges.length > 0" 
+          title="Repositories"
+          :repos="account.repositories.edges" />
       </v-container>
     </v-card>
   </v-layout>
@@ -27,7 +18,7 @@
 
 <script>
 import Header from './Header'
-import RepoCard from './RepoCard'
+import RepoList from './RepoList'
 
 export default {
   props: {
@@ -35,15 +26,7 @@ export default {
   },
   components: {
     Header,
-    RepoCard
+    RepoList
   }
 }
 </script>
-<style>
-  .dot {
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-</style>

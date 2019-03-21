@@ -23,7 +23,7 @@
         {{ repo.node.forks.totalCount }}
       </span>
       <span v-if="repo.node.licenseInfo" class="ml-3">
-        <v-icon>fas fa-certificate</v-icon>
+        <v-icon>fas fa-gavel</v-icon>
         {{ repo.node.licenseInfo.name.split(' ')[0] }}
       </span>
     </v-card-actions>
@@ -42,5 +42,11 @@ export default {
 .card-footer {
   font-weight: 100;
   font-size: 12px;
+}
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
 }
 </style>
