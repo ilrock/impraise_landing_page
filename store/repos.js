@@ -13,6 +13,9 @@ export const getters = {
 export const mutations = {
   setRepos (state, payload) {
     state.repos = payload
+  },
+  appendToRepos (state, payload) {
+    state.repos = [...state.repos, ...payload]
   }
 }
 
@@ -26,8 +29,20 @@ export const actions = {
       const { data: res } = await this.$axios.post('https://api.github.com/graphql', searchRepos(payload, rootState.accounts.account.login))
       commit('setRepos', res.data.search.edges)
     } else {
-      console.log('all repos')
       dispatch('getRepos', rootState.accounts.account.login)
     }    
-  }
+  },
+  loadMore ({ commit, state, rootState }) {
+    return new Promise(async (resolve) => {
+      const login = rootState.accounts.account.login
+      const last = state.repos[state.repos.length - 1].cursor
+
+      console.log(last)
+
+      const { data: res} = await this.$axios.post('https://api.github.com/graphql', getRepos(login, last))
+
+      resolve()
+      commit('appendToRepos', res.data.search.edges)
+    })
+  },
 }

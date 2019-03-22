@@ -11,6 +11,7 @@
           title="Repositories"
           :searchEnabled="true"
           :repos="repos" />
+        <Loader v-if="loading" />
       </v-container>
     </v-card>
   </v-layout>
@@ -19,11 +20,24 @@
 <script>
 import Header from './Header'
 import RepoList from './RepoList'
+import Loader from './Loader'
 
 export default {
   components: {
     Header,
-    RepoList
+    RepoList,
+    Loader
+  },
+  data () {
+    return {
+      bottom: false,
+      loading: false
+    }
+  },
+  mounted () {
+    window.addEventListener('scroll', () => {
+      this.bottom = this.bottomVisible()
+    })
   },
   computed: {
     account () {
@@ -31,6 +45,29 @@ export default {
     },
     repos () {
       return this.$store.getters['repos/repos']
+    }
+  },
+  watch: {
+    bottom (bottom) {
+      if (bottom) {
+        this.addRepos()
+      }
+    }
+  },
+  methods: {
+    bottomVisible () {
+      const scrollY = window.scrollY
+      const visible = document.documentElement.clientHeight
+      const pageHeight = document.documentElement.scrollHeight
+      const bottomOfPage = visible + scrollY + 500 >= pageHeight
+      return bottomOfPage || pageHeight < visible
+    },
+    async addRepos () {
+      this.loading = true
+
+      await this.$store.dispatch('repos/loadMore')
+
+      this.loading = false
     }
   }
 }

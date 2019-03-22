@@ -17,7 +17,7 @@
       </span>
     </v-layout>    
     <v-layout v-else row wrap>
-      <v-flex xs12 md6 mt-3 v-for="repo in repos" :key="repo.node.name">
+      <v-flex xs12 md6 mt-3 v-for="repo in repos" :key="repo.node.url">
         <repo-card :repo="repo"/>
       </v-flex>
     </v-layout>

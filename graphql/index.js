@@ -1,6 +1,7 @@
 export const getDetails = (handle) => {
   const query = '{' +
     `search(first: 1, type: USER, query: "${handle} in:login type:org") {` +
+      'repositoryCount ' +
       'edges {' +
         'node {' +
           '... on Organization {' +
@@ -44,9 +45,16 @@ export const getDetails = (handle) => {
   return { query }
 }
 
-export const getRepos = (handle) => {
+export const getRepos = (handle, lastCursor) => {
+  let after = ''
+
+  if (lastCursor) {
+    after = ` after: "${lastCursor}"`
+  }
+
   const query = '{' +
-    `search(first: 10, type: REPOSITORY, query: "user:${handle}") {` +
+    `search(first: 10, ${after}type: REPOSITORY, query: "user:${handle}") {` +
+      'repositoryCount ' +
       'edges{' +
         'cursor ' +
         'node {' +
